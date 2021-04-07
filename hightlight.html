@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    //匹配整个关键词 不拆分
+    function highlight(text, words, tag) {
+      // 默认的标签，如果没有指定，使用span
+      tag = tag || 'span'
+      var i,
+        len = words.length,
+        re
+      //匹配每一个特殊字符 ，进行转义
+      var specialStr = ['*', '.', '?', '+', '$', '^', '[', ']', '{', '}', '|', '\\', '(', ')', '/', '%']
+      $.each(specialStr, function (i, item) {
+        if (words.indexOf(item) != -1) {
+          words = words.replace(new RegExp('\\' + item, 'g'), '\\' + item)
+        }
+      })
+      //匹配整个关键词
+      re = new RegExp(words, 'g')
+      if (re.test(text)) {
+        text = text.replace(re, '<' + tag + ' class="highlight">$&</' + tag + '>')
+      }
+      return text
+    }
+  </script>
+</html>
